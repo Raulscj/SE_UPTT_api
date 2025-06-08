@@ -1,29 +1,27 @@
-// Importación de reflect-metadata (obligatoria para TypeORM)
-require("reflect-metadata");
+import "reflect-metadata";
 
-const express = require("express");
-const { createConnection } = require("typeorm");
+import middleWares from "./middlewares/index.js";
+import routers from "./routes/index.js";
+import Server from "./server.js";
+import { AppDataSource } from "./db.js";
+import { PORT } from "../constants.js";
 
-// Establece la conexión a la base de datos usando la configuración de ormconfig.json
-createConnection()
-  .then(() => {
-    const app = express();
+// Configuración del puerto
+const port = Number(PORT) || 3000;
 
-    // Middlewares para procesar JSON
-    app.use(express.json());
+// Creación del servicio
+const server = new Server({
+  port,
+  middleWares: middleWares,
+  routes: [routers],
+});
+server.listen();
 
-    // Ruta de ejemplo: home / inicio
-    app.get("/", (req, res) => {
-      res.send("¡Servidor y base de datos conectados correctamente!");
-    });
-
-    // Aquí podrías integrar tus rutas adicionales importándolas de src/routes/
-
-    // Inicia el servidor en el puerto 3000 (o el que desees)
-    app.listen(3000, () => {
-      console.log("Servidor corriendo en el puerto 3000");
-    });
+// Conexión a la base de datos
+AppDataSource.initialize()
+  .then(async () => {
+    console.log("Database connected");
   })
-  .catch((error) => {
-    console.error("Error al conectar con la base de datos:", error);
+  .catch((err) => {
+    console.log("Error during Data Source initialization:", err);
   });

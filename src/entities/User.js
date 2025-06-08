@@ -1,6 +1,6 @@
-const { EntitySchema } = require("typeorm");
+import { EntitySchema } from "typeorm";
 
-const UserSchema = new EntitySchema({
+export const UserSchema = new EntitySchema({
   name: "User", // Nombre para identificar la entidad
   tableName: "users", // Nombre de la tabla en SQLite
   columns: {
@@ -17,5 +17,3 @@ const UserSchema = new EntitySchema({
     },
   },
 });
-
-module.exports = UserSchema;
