@@ -1,9 +1,11 @@
-import { sign } from "jsonwebtoken";
+import pkg from "jsonwebtoken";
+import { Router } from "express";
 
 import { AdminRepository } from "../database/repository/AdminRepository.js";
 import { EXPIRES, SECRET } from "../../constants.js";
 
 const router = Router();
+const { sign } = pkg;
 
 //const expiresIn = EXPIRES ? String(EXPIRES) : "15m";
 const expiresIn = typeof EXPIRES === "number" ? EXPIRES : "15m";
