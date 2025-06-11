@@ -10,7 +10,7 @@ const verifyEnvVariable = (name) => {
 
   return value;
 };
-export const { PASSWORD, PORT } = process.env;
+export const { PORT, EXPIRES } = process.env;
 
-export const ADMIN = verifyEnvVariable("ADMIN");
 export const DATABASE = verifyEnvVariable("DATABASE");
+export const SECRET = verifyEnvVariable("TOKEN_SECRET");

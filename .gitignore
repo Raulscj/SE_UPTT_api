@@ -12,3 +12,5 @@
 #!.yarn/cache
 .pnp.*
 .env
+Pautas
+node_modules

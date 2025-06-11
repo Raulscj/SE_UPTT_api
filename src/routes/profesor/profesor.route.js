@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { login, register } from "../../controllers/authController";
+
 /** 
 import {
   //view,
@@ -17,6 +19,8 @@ const router = Router();
 router.get("/", (req, res) => {
   res.send("¡Bienvenido al area de docencia!");
 });
+
+router.post("/login", login);
 /*
 router.get("/", verifytoken, getUsers);
 
