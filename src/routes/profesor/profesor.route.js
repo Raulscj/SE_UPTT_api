@@ -21,6 +21,9 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", login);
+
+router.post("/create", register);
+
 /*
 router.get("/", verifytoken, getUsers);
 

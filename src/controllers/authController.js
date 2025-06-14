@@ -35,39 +35,38 @@ export const register = (req, res) => {
         activo: true,
       });
 
-      AdminRepository.save(admin)
+      AdminRepository.createWithPassword(admin)
         .then((admin) => res.send(admin))
         .catch((error) => responseAndLogger(res, error.message, 500));
     });
 };
 
-export const login = (req, res) => {
+export const login = async (req, res) => {
   const { cedula, credential } = req.body;
 
-  AdminRepository.findOneByOrFail({ cedula })
-    .then((admin) => {
-      if (admin.comparePassword(credential)) {
-        sign(
-          { id: admin.id, cedula: admin.cedula },
-          SECRET,
-          { expiresIn },
-          (err, token) => {
-            if (err || !token) {
-              responseAndLogger(res, "No fue posible generar el Token", 400);
-            }
-            return res.send({ token });
-          }
-        );
-      } else {
-        responseAndLogger(res, "Credencial invalida", 400);
-      }
-    })
-    .catch(() => responseAndLogger(res, "Administrador invalido", 400));
-};
+  try {
+    const admin = await AdminRepository.findOneByOrFail({ cedula });
+    const isValid = await AdminRepository.comparePassword(admin, credential);
 
-//Proof
-export const info = (req, res) => {
-  res.send(res.locals.payload);
+    if (isValid) {
+      sign(
+        { id: admin.id, cedula: admin.cedula },
+        SECRET,
+        { expiresIn },
+        (err, token) => {
+          if (err || !token) {
+            responseAndLogger(res, "No fue posible generar el Token", 400);
+          }
+          return res.send({ token });
+        }
+      );
+    } else {
+      responseAndLogger(res, "Credencial invalida", 400);
+    }
+  } catch (error) {
+    console.log("This is the error:", error);
+    responseAndLogger(res, "Administrador invalido", 400);
+  }
 };
 
 export default router;

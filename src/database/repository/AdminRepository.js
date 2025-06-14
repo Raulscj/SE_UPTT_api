@@ -12,6 +12,6 @@ export const AdminRepository = AppDataSource.getRepository(AdminSchema).extend({
   },
 
   async comparePassword(admin, inputPassword) {
-    return bcrypt.compareSync(inputPassword, admin.credential);
+    return await bcrypt.compare(inputPassword, admin.credential);
   },
 });
