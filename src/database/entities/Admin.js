@@ -2,7 +2,7 @@ import { EntitySchema } from "typeorm";
 
 export const AdminSchema = new EntitySchema({
   name: "Admin",
-  tableName: "Admin",
+  tableName: "Administradores",
   columns: {
     id: {
       primary: true,

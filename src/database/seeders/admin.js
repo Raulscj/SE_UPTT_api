@@ -4,7 +4,7 @@ import { AdminRepository } from "../repository/AdminRepository.js";
 export const seedAdmin = async () => {
   // Verifica si ya existen datos para evitar duplicaciones
   const existingAdmins = await AdminRepository.count();
-  if (existingAdmins > 0) {
+  if (existingAdmins > 3) {
     console.log("Los Administradores ya han sido insertados previamente.");
     return;
   }
