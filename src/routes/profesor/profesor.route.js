@@ -1,36 +1,23 @@
 import { Router } from "express";
 
 import { login, register } from "../../controllers/authController.js";
-
-/** 
 import {
-  //view,
-  createUser,
-  getUsers,
-  updateUser,
-  deleteUser,
-} from "../../controllers/user.controller";
- */
+  getAdmin,
+  updateAdmin,
+  deleteAdmin,
+  getOneAdmin,
+} from "../../controllers/adminController.js";
 // TODO:import verifytoken from "../../middlewares/verifytoken";
 
 // Creación de la ruta
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("¡Bienvenido al area de docencia!");
-});
+router.get("/", getAdmin);
 
 router.post("/login", login);
 
 router.post("/create", register);
 
-/*
-router.get("/", verifytoken, getUsers);
+router.route("/:id").get(getOneAdmin).put(updateAdmin).delete(deleteAdmin);
 
-router.post("/", verifytoken, createUser);
-
-router.put("/", verifytoken, updateUser);
-
-router.delete("/", verifytoken, deleteUser);
-*/
 export default router;

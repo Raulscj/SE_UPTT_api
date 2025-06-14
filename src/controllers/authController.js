@@ -1,10 +1,8 @@
 import pkg from "jsonwebtoken";
-import { Router } from "express";
 
 import { AdminRepository } from "../database/repository/AdminRepository.js";
 import { EXPIRES, SECRET } from "../../constants.js";
 
-const router = Router();
 const { sign } = pkg;
 
 //const expiresIn = EXPIRES ? String(EXPIRES) : "15m";
@@ -68,5 +66,3 @@ export const login = async (req, res) => {
     responseAndLogger(res, "Administrador invalido", 400);
   }
 };
-
-export default router;

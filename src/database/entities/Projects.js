@@ -18,10 +18,6 @@ export const ProjectSchema = new EntitySchema({
       type: "text",
       nullable: true,
     },
-    orden_proyecto: {
-      type: "int",
-      nullable: false,
-    },
     activo: {
       type: "boolean",
       default: true,
