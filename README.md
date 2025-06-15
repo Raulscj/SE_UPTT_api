@@ -23,5 +23,5 @@ el nombre de la base de datos. Una vez completado se debe ejecutar:
 Ya con esos datos el servidor estaria ejecutandose, en el terminal debes ver el mensaje 
 [Running successfully] como indicador de que todo esta ok.
 - De momento la unica ruta activa es:
-get[http://localhost:3306/teaches] 
-post[http://localhost:3306/teaches/login] 
+get[http://localhost:3306/admin] 
+post[http://localhost:3306/admin/login] 
