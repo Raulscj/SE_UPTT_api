@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+//Controllers
 import { login, register } from "../../controllers/authController.js";
 import {
   getAdmin,
@@ -7,7 +8,13 @@ import {
   deleteAdmin,
   getOneAdmin,
 } from "../../controllers/adminController.js";
-// TODO:import verifytoken from "../../middlewares/verifytoken";
+//Middlewares
+import { verifyToken } from "../../middlewares/validations/authJWT.js";
+import {
+  createRule,
+  deleteRule,
+  updateRule,
+} from "../../middlewares/validations/adminRequest.js";
 
 // Creación de la ruta
 const router = Router();
@@ -16,8 +23,12 @@ router.get("/", getAdmin);
 
 router.post("/login", login);
 
-router.post("/create", register);
+router.post("/create", [createRule], register);
 
-router.route("/:id").get(getOneAdmin).put(updateAdmin).delete(deleteAdmin);
+router
+  .route("/:id")
+  .get(getOneAdmin)
+  .put([verifyToken, updateRule], updateAdmin)
+  .delete([verifyToken, deleteRule], deleteAdmin);
 
 export default router;

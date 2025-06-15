@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+//Controllers
 import {
   createEvaluationResult,
   getEvaluationResult,
@@ -7,19 +8,25 @@ import {
   deleteEvaluationResult,
   getOneEvaluationResult,
 } from "../../controllers/evaluationResultController.js";
-// TODO:import verifytoken from "../../middlewares/verifytoken";
+//Middlewares
+import { verifyToken } from "../../middlewares/validations/authJWT.js";
+import {
+  createRule,
+  deleteRule,
+  updateRule,
+} from "../../middlewares/validations/evaluationResultRequest.js";
 
 // Creación de la ruta
 const router = Router();
 
 router.get("/", getEvaluationResult);
 
-router.post("/create", createEvaluationResult);
+router.post("/create", [verifyToken, createRule], createEvaluationResult);
 
 router
   .route("/:id")
   .get(getOneEvaluationResult)
-  .put(updateEvaluationResult)
-  .delete(deleteEvaluationResult);
+  .put([verifyToken, updateRule], updateEvaluationResult)
+  .delete([verifyToken, deleteRule], deleteEvaluationResult);
 
 export default router;

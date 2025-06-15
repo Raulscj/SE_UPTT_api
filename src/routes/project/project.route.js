@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+//Controllers
 import {
   createProject,
   getProject,
@@ -7,18 +8,24 @@ import {
   deleteProject,
   getOneProject,
 } from "../../controllers/projectController.js";
-// TODO:import verifytoken from "../../middlewares/verifytoken";
+//Middlewares
+import { verifyToken } from "../../middlewares/validations/authJWT.js";
+import {
+  createRule,
+  deleteRule,
+  updateRule,
+} from "../../middlewares/validations/projectRequest.js";
 
 const router = Router();
 
 router.get("/", getProject);
 
-router.post("/create", createProject);
+router.post("/create", [verifyToken, createRule], createProject);
 
 router
   .route("/:id")
   .get(getOneProject)
-  .put(updateProject)
-  .delete(deleteProject);
+  .put([verifyToken, updateRule], updateProject)
+  .delete([verifyToken, deleteRule], deleteProject);
 
 export default router;

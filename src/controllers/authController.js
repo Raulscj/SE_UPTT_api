@@ -5,8 +5,7 @@ import { EXPIRES, SECRET } from "../../constants.js";
 
 const { sign } = pkg;
 
-//const expiresIn = EXPIRES ? String(EXPIRES) : "15m";
-const expiresIn = typeof EXPIRES === "number" ? EXPIRES : "15m";
+const expiresIn = `${EXPIRES}m`;
 
 function responseAndLogger(res, message, status = 500) {
   if (status >= 500) {
@@ -34,8 +33,11 @@ export const register = (req, res) => {
       });
 
       AdminRepository.createWithPassword(admin)
-        .then((admin) => res.send(admin))
-        .catch((error) => responseAndLogger(res, error.message, 500));
+        .then((admin) => res.status(201).send(admin))
+        .catch((error) => {
+          console.log("Error al crear el admin");
+          responseAndLogger(res, error.message, 500);
+        });
     });
 };
 

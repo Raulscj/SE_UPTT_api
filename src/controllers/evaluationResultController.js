@@ -3,25 +3,17 @@ import { EvaluationResultRepository } from "../database/repository/EvaluationRes
 export const createEvaluationResult = async (req, res) => {
   try {
     const {
-      pregunta,
-      opcion_a,
-      opcion_b,
-      opcion_c,
-      respuesta_correcta,
-      id_proyecto,
-      id_contenido,
-      puntos,
+      id_estudiante,
+      id_evaluacion,
+      respuesta_seleccionada,
+      es_correcta,
     } = req.body ?? {};
 
     const newData = EvaluationResultRepository.create({
-      pregunta,
-      opcion_a,
-      opcion_b,
-      opcion_c,
-      respuesta_correcta,
-      id_proyecto,
-      id_contenido,
-      puntos,
+      id_estudiante,
+      id_evaluacion,
+      respuesta_seleccionada,
+      es_correcta,
     });
     await EvaluationResultRepository.save(newData);
 

@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+//Controllers
 import {
   createContent,
   getContent,
@@ -7,20 +8,25 @@ import {
   deleteContent,
   getOneContent,
 } from "../../controllers/contentController.js";
-// TODO:import verifytoken from "../../middlewares/verifytoken";
+//Middlewares
+import { verifyToken } from "../../middlewares/validations/authJWT.js";
+import {
+  createRule,
+  deleteRule,
+  updateRule,
+} from "../../middlewares/validations/contentRequest.js";
 
 // Creación de la ruta
 const router = Router();
 
 router.get("/", getContent);
 
-// TODO: Requiere que exista un ID de proyecto valido
-router.post("/create", createContent);
+router.post("/create", [verifyToken, createRule], createContent);
 
 router
   .route("/:id")
   .get(getOneContent)
-  .put(updateContent)
-  .delete(deleteContent);
+  .put([verifyToken, updateRule], updateContent)
+  .delete([verifyToken, deleteRule], deleteContent);
 
 export default router;

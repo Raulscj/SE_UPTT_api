@@ -9,4 +9,4 @@ no son los mismos datos que se necesitan por parte del Profesor.
 - 
 
 # Preguntas
-- Es necesario que alguna tabla tenga informacion por defecto, datos que deban agregarse o validarse una vez que se ejecute el proyecto?
+
